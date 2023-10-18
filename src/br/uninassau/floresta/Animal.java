@@ -2,11 +2,9 @@ package br.uninassau.floresta;
 
 import java.util.Random;
 import br.uninassau.util.Terreno;
-import br.uninassau.util.Configuracoes;
 
 public class Animal {
 	Random random = new Random();
-	Configuracoes config = new Configuracoes();
 	
 	public int clicoVida, posix, posiy, vida;
 	public String simbolo;
@@ -14,16 +12,16 @@ public class Animal {
 	boolean predador;
 	
 	//Construtor da criação do Animal
-	public Animal(String nome, boolean predador, int vida, String simbolo) {
+	public Animal(String nome, boolean predador, int vida, String simbolo, int tamanhoTerreno) {
 		this.nome = nome;
 		this.predador = predador;
 		this.vida = vida;
 		this.simbolo = simbolo;
-		this.posix = random.nextInt(10);
-		this.posiy = random.nextInt(10);
+		this.posix = random.nextInt(tamanhoTerreno);
+		this.posiy = random.nextInt(tamanhoTerreno);
 	}
 	
-	
+	//Modulo da interação entre predadores e presas 
 	public void comer(Animal predador, Animal presa, Terreno terreno) {
 		if (predador.predador == true && presa.predador == false) {
 			presa.vida--;
@@ -36,8 +34,8 @@ public class Animal {
 			}
 		}
 	}
-	
-	//Get das posições X e Y
+
+	//Getter para obter informação das posições X e Y
 	public int getposix() {
 		return posix;
 	}
@@ -64,14 +62,19 @@ public class Animal {
 				posY--;
 				break;
 	}
+		//Verifica se esta no limite do mapa
 		if (posX >= 0 && posX < terreno.getTamanho() && posY >= 0 && posY < terreno.getTamanho()) {
-			terreno.removerAnimal(animal);
-			terreno.moverAnimal(animal, posX, posY);
-			posix = posX;
-			posiy = posY;
-		}
-		
-	}	
+			//Se caso houver uma arvore no caminho, ele não irá colidir
+			if(terreno.tamanhoTerreno[posX][posY].equals("#")){
+				//Não faz nada, é uma posição com árvore
+	        }
+			//Caso contrario, irá se movimentar livremente
+			else {
+				terreno.removerAnimal(animal);
+				terreno.moverAnimal(animal, posX, posY);
+				posix = posX;
+				posiy = posY;
+			}
+	    }
+	}		
 }
-	
-
