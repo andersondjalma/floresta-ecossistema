@@ -46,18 +46,18 @@ public class SimuladorEcossistema {
         	
         	//Adiciona aos objetos clico de vida e movimento
         	for (Arvore arvore : arvores) {
-        		arvore.clicoVida++;
+        		arvore.setClicoVida(arvore.getClicoVida() + 1);
         	}
             for (Animal coelho : coelhos) {
-            	if(coelho.vida > 0) {
+            	if(coelho.getVida() > 0) {
             		coelho.mover(terreno, coelho);
-            		coelho.clicoVida++;
+            		coelho.setClicoVida(coelho.getClicoVida() + 1);
             	}
             } 
             for (Animal tigre : tigres) {
-            	if(tigre.vida > 0) {
+            	if(tigre.getVida() > 0) {
             		tigre.mover(terreno, tigre);
-            		tigre.clicoVida++;
+            		tigre.setClicoVida(tigre.getClicoVida() + 1);
             	}
             }
             
@@ -66,7 +66,7 @@ public class SimuladorEcossistema {
             	for(Animal tigre : tigres) {
             		if (tigre.getposix() == coelho.getposix() && tigre.getposiy() == coelho.getposiy()) {
             			tigre.comer(tigre, coelho, terreno);
-            			if (coelho.vida == 0) {
+            			if (coelho.getVida() == 0) {
             				break;
             			}
             		}
@@ -76,7 +76,7 @@ public class SimuladorEcossistema {
             //Verifica se todos os Coelhos foram mortos, assim terminando o programa
             boolean todosMortos = true;
             for (Coelho coelho : coelhos) {
-                if (coelho.vida > 0) {
+                if (coelho.getVida() > 0) {
                     todosMortos = false;
                     break;
                 }

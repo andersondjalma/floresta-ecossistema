@@ -6,10 +6,10 @@ import br.uninassau.util.Terreno;
 public class Animal {
 	Random random = new Random();
 	
-	public int clicoVida, posix, posiy, vida;
-	public String simbolo;
-	String nome;
-	boolean predador;
+	private int clicoVida, posix, posiy, vida;
+	private String simbolo;
+	private String nome;
+	private boolean predador;
 	
 	//Construtor da criação do Animal
 	public Animal(String nome, boolean predador, int vida, String simbolo, int tamanhoTerreno) {
@@ -28,19 +28,37 @@ public class Animal {
 			if (presa.vida == 0) {
 				terreno.imprimirTerreno();
 				System.out.println(predador.nome + " comeu " + presa.nome);
-				System.out.println(presa.nome + " sobreviveu por " + presa.clicoVida + " ciclos de vida");
+				System.out.println(presa.nome + " sobreviveu por " + presa.getClicoVida() + " ciclos de vida");
 				terreno.removerAnimal(presa);
 				System.out.println("");
 			}
 		}
 	}
 
-	//Getter para obter informação das posições X e Y
+	//Getter para obter informação
 	public int getposix() {
 		return posix;
 	}
 	public int getposiy() {
 		return posiy;
+	}
+	public int getVida() {
+		return vida;
+	}
+	public int getClicoVida() {
+		return clicoVida;
+	}
+	public void setClicoVida(int clicoVida) {
+		this.clicoVida = clicoVida;
+	}		
+	public String getSimbolo() {
+		return simbolo;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public boolean getPredador() {
+		return predador;
 	}
 	
 	//Movimento dos Animais
@@ -65,7 +83,7 @@ public class Animal {
 		//Verifica se esta no limite do mapa
 		if (posX >= 0 && posX < terreno.getTamanho() && posY >= 0 && posY < terreno.getTamanho()) {
 			//Se caso houver uma arvore no caminho, ele não irá colidir
-			if(terreno.tamanhoTerreno[posX][posY].equals("#")){
+			if(terreno.getTamanhoTerreno()[posX][posY].equals("#")){
 				//Não faz nada, é uma posição com árvore
 	        }
 			//Caso contrario, irá se movimentar livremente
@@ -76,5 +94,6 @@ public class Animal {
 				posiy = posY;
 			}
 	    }
-	}		
+	}
+
 }
